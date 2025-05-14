@@ -61,6 +61,8 @@ namespace {
 			}
 
 			case cmd_del_file: {
+				playback_control_v3::get()->next();
+
 				auto item = pm->playlist_get_item_handle(pl_idx, item_idx);
 
 				auto fs = filesystem::getLocalFS();
