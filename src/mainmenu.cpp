@@ -63,7 +63,10 @@ namespace {
 			case cmd_del_file: {
 				auto item = pm->playlist_get_item_handle(pl_idx, item_idx);
 
-				popup_message::g_show(item->get_path(), "path!!1!");
+				auto fs = filesystem::getLocalFS();
+
+				abort_callback_impl abort;
+				fs->remove(item->get_path(), abort);
 
 				break;
 			}
