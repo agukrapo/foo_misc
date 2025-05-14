@@ -16,11 +16,11 @@ jobs:
 
       - name: Build x86
         run: |
-          msbuild foo_misc.sln /maxcpucount /property:RestorePackagesConfig=true,Configuration=Release,Platform=Win32 /target:restore,build
+          msbuild foo_misc.sln /maxcpucount /p:Configuration=release /p:Platform=x86 /target:build
 
       - name: Build x64
         run: |
-          msbuild foo_misc.sln /maxcpucount /property:RestorePackagesConfig=true,Configuration=Release,Platform=x64   /target:restore,build
+          msbuild foo_misc.sln /maxcpucount /p:Configuration=release /p:Platform=x64 /target:build
 
       - name: Prepare build artifacts
         run: |
