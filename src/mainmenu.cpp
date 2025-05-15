@@ -27,7 +27,7 @@ namespace {
 		void get_name(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_pl_rem: p_out = "! remove from playlist"; break;
-			case cmd_del_file: p_out = "! delete file"; break;
+			case cmd_del_file: p_out = "! recycle file"; break;
 			default: uBugCheck(); // should never happen
 			}
 		}
