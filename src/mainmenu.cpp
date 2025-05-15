@@ -50,7 +50,6 @@ namespace {
 			}
 
 			switch (p_index) {
-
 			case cmd_pl_rem: {
 				bit_array_one arr(item_idx);
 				pm->playlist_undo_backup(pl_idx);
@@ -65,10 +64,35 @@ namespace {
 
 				auto item = pm->playlist_get_item_handle(pl_idx, item_idx);
 
-				auto fs = filesystem::getLocalFS();
+				if (!item.is_valid() || item.is_empty()) {
+					popup_message::g_complain("Could not recycle", "Item is invalid");
+					return;
+				}
 
-				abort_callback_impl abort;
-				fs->remove(item->get_path(), abort);
+				std::string str(item->get_path());
+				if (str._Starts_with("file://")) {
+					str.erase(0, 7);
+				}
+
+				CA2W ca2w(str.c_str());
+				std::wstring wstr = ca2w;
+
+				wstr += std::wstring(1, L'\0');
+
+				SHFILEOPSTRUCT fileOp = { 0 };
+				fileOp.wFunc = FO_DELETE;
+				fileOp.pFrom = wstr.c_str();
+				fileOp.fFlags = FOF_ALLOWUNDO;
+				
+				int code = SHFileOperation(&fileOp);
+				if (code == 0) {
+					bit_array_one arr(item_idx);
+					pm->playlist_remove_items(pl_idx, arr);
+				} else {
+					pfc::string_formatter msg;
+					msg << "Error code " << code << "\nwstr.c_str(): " << wstr.c_str() << "\nstr: " << str.c_str();
+					popup_message::g_complain("Could not recycle", msg);
+				}
 
 				break;
 			}
