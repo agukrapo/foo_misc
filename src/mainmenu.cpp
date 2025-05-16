@@ -5,7 +5,7 @@ namespace {
 	static const GUID id_pl_rem = { 0x674c0096, 0xb9fb, 0x4f4d, { 0xa0, 0xf6, 0x93, 0x7b, 0x35, 0x3f, 0x99, 0xaf } };
 	static const GUID id_del = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
 
-	static mainmenu_group_popup_factory g_mainmenu_group(id_group, mainmenu_groups::file, mainmenu_commands::sort_priority_dontcare, "! MISC");
+	static mainmenu_group_popup_factory g_mainmenu_group(id_group, mainmenu_groups::file, mainmenu_commands::sort_priority_dontcare, "Misc");
 
 	class _commands : public mainmenu_commands {
 	public:
@@ -26,8 +26,8 @@ namespace {
 		}
 		void get_name(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
-			case cmd_pl_rem: p_out = "! remove from playlist"; break;
-			case cmd_del_file: p_out = "! recycle file"; break;
+			case cmd_pl_rem: p_out = "Remove from playlist"; break;
+			case cmd_del_file: p_out = "Recycle file"; break;
 			default: uBugCheck(); // should never happen
 			}
 		}
