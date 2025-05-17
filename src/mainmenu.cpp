@@ -49,19 +49,18 @@ namespace {
 				return;
 			}
 
+			playback_control_v3::get()->next();
+
 			switch (p_index) {
 			case cmd_pl_rem: {
 				bit_array_one arr(item_idx);
 				pm->playlist_undo_backup(pl_idx);
 				pm->playlist_remove_items(pl_idx, arr);
 
-				playback_control_v3::get()->next();
 				break;
 			}
 
 			case cmd_del_file: {
-				playback_control_v3::get()->next();
-
 				auto item = pm->playlist_get_item_handle(pl_idx, item_idx);
 
 				if (!item.is_valid() || item.is_empty()) {
@@ -97,7 +96,7 @@ namespace {
 				break;
 			}
 			default:
-				uBugCheck(); // should never happen
+				uBugCheck();
 			}
 		}
 	};
