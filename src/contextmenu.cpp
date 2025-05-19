@@ -91,16 +91,11 @@ namespace {
 			for (t_size i = 0; i < p_data.get_count(); ++i) {
 				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
 
-				auto artist = get_all_meta(info, "artist");
-				auto title = get_all_meta(info, "title");
-
-				if (!artist.empty() || !title.empty()) {
-					if (i > 0) {
-						query.add_string(" ");
-					}
-
-					query << artist << " " << title;
+				if (i > 0) {
+					query.add_string(" ");
 				}
+
+				query << get_song_name(info);				
 			}
 
 			library_search_ui::get()->show(query);
@@ -112,7 +107,7 @@ namespace {
 			for (t_size i = 0; i < p_data.get_count(); ++i) {
 				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
 				
-				auto data = get_all_meta(info, name);
+				pfc::string data = get_all_meta(info, name);
 				if (!data.empty()) {
 					if (i > 0) {
 						query.add_string(" OR ");
@@ -148,20 +143,6 @@ namespace {
 
 			library_search_ui::get()->show(query);
 		}
-
-		pfc::string get_all_meta(const file_info* info, const char* name) {
-			pfc::string_formatter out;
-
-			for (t_size i = 0; i < info->meta_get_count_by_name(name); ++i) {
-				if (i > 0) {
-					out.add_string(" "); 
-				}
-				out.add_string(info->meta_get(name, i)); 
-			}
-			
-			return out;
-		}
-			
 	};
 
 	static contextmenu_item_factory_t<_items> _contextmenu_factory;
