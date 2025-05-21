@@ -1,11 +1,16 @@
 #include "stdafx.h"
 
 
-pfc::string get_song_name(const file_info* info) {
+pfc::string song_name(const file_info* info) {
 	auto artist = get_all_meta(info, "artist");
 	auto title = get_all_meta(info, "title");
 
-	return artist << " " << title;
+	pfc::string middle;
+	if (!artist.is_empty() && !title.is_empty()) {
+		middle = " ";
+	}
+
+	return artist << middle << title;
 }
 
 pfc::string get_all_meta(const file_info* info, const char* name) {

@@ -1,8 +1,6 @@
 #include "stdafx.h"
 
 
-pfc::string get_song_name(const file_info* info);
-
 namespace {
 	static const GUID id_group = { 0xe27c7c95, 0x6ed4, 0x43df, { 0xa3, 0xd8, 0xa7, 0x57, 0x5d, 0x07, 0x94, 0x5d } };
 
@@ -117,7 +115,7 @@ namespace {
 				return;
 			}
 
-			auto name = get_song_name(&item->get_full_info_ref(fb2k::noAbort)->info());
+			auto name = song_name(&item->get_full_info_ref(fb2k::noAbort)->info());
 
 			ClipboardHelper::OpenScope scope; 
 			scope.Open(core_api::get_main_window());

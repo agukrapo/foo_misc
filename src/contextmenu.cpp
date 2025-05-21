@@ -91,11 +91,16 @@ namespace {
 			for (t_size i = 0; i < p_data.get_count(); ++i) {
 				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
 
-				if (i > 0) {
-					query.add_string(" ");
+				auto song = song_name(info);
+				if (song.empty()) {
+					continue;
 				}
 
-				query << get_song_name(info);				
+				if (!query.empty()) {
+					query.add_string(" OR ");
+				}
+
+				query << "* HAS " << song;
 			}
 
 			library_search_ui::get()->show(query);
@@ -107,14 +112,16 @@ namespace {
 			for (t_size i = 0; i < p_data.get_count(); ++i) {
 				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
 				
-				pfc::string data = get_all_meta(info, name);
-				if (!data.empty()) {
-					if (i > 0) {
-						query.add_string(" OR ");
-					}
-
-					query << "%" << name << "% HAS " << data;
+				auto data = get_all_meta(info, name);
+				if (data.empty()) {
+					continue;
 				}
+
+				if (!query.empty()) {
+					query.add_string(" OR ");
+				}
+
+				query << "%" << name << "% HAS " << data;
 			}
 
 			library_search_ui::get()->show(query);
@@ -132,7 +139,7 @@ namespace {
 					continue;
 				}
 
-				if (i > 0) {
+				if (!query.empty()) {
 					query.add_string(" OR ");
 				}
 
