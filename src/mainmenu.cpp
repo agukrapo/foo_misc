@@ -107,7 +107,7 @@ namespace {
 
 			int code = SHFileOperation(&fileOp);
 			if (code != 0) {
-				popup_message::g_complain("Could not recycle ", pfc::string_formatter() << "error code " << code);
+				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code " , code));
 			}
 		}
 
