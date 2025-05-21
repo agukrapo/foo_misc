@@ -6,8 +6,6 @@ namespace {
 	static contextmenu_group_popup_factory _group_factory(id_group, contextmenu_groups::root, "Search more of the same", 0);
 
 	class _items : public contextmenu_item_simple {
-		typedef contextmenu_item_simple super_t;
-	
 	public:
 		enum {
 			cmd_song = 0,
@@ -19,12 +17,14 @@ namespace {
 			cmd_directory,
 			cmd_total
 		};
-		GUID get_parent() override {  
-			return id_group; 
+		GUID get_parent() override {
+			return id_group;
 		}
+
 		unsigned get_num_items() override {
-			return cmd_total; 
+			return cmd_total;
 		}
+
 		void get_item_name(unsigned p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_song: p_out = "Song"; break;
@@ -37,6 +37,7 @@ namespace {
 			default: uBugCheck();
 			}
 		}
+
 		GUID get_item_guid(unsigned p_index) override {
 			static const GUID id_song = { 0x609bd371, 0x80d9, 0x4557, { 0x91, 0xbe, 0x18, 0x2, 0x0, 0x53, 0xc9, 0xf0 } };
 			static const GUID id_artist = { 0x9248b12c, 0xb88, 0x4870, { 0xbe, 0x88, 0x99, 0x6e, 0x92, 0x32, 0x7d, 0x74 } };
@@ -58,6 +59,7 @@ namespace {
 			}
 
 		}
+
 		bool get_item_description(unsigned p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_song: p_out = "Searches the library for similar songs."; return true;
@@ -71,6 +73,7 @@ namespace {
 				uBugCheck();
 			}
 		}
+
 		void context_command(unsigned p_index, metadb_handle_list_cref p_data, const GUID& p_caller) override {
 			switch (p_index) {
 			case cmd_song: songSearch(p_data); break;
@@ -111,7 +114,7 @@ namespace {
 
 			for (t_size i = 0; i < p_data.get_count(); ++i) {
 				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
-				
+
 				auto data = get_all_meta(info, name);
 				if (data.empty()) {
 					continue;
@@ -145,7 +148,7 @@ namespace {
 
 				auto parent = pfc::io::path::getParent(fullDir);
 
-				query << "%directory% HAS " << fullDir.subString(parent.length()+1);
+				query << "%directory% HAS " << fullDir.subString(parent.length() + 1);
 			}
 
 			library_search_ui::get()->show(query);

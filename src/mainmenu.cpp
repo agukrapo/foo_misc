@@ -14,9 +14,11 @@ namespace {
 			cmd_cp_name,
 			cmd_total
 		};
+
 		t_uint32 get_command_count() override {
 			return cmd_total;
 		}
+
 		GUID get_command(t_uint32 p_index) override {
 			static const GUID id_pl_rem = { 0x674c0096, 0xb9fb, 0x4f4d, { 0xa0, 0xf6, 0x93, 0x7b, 0x35, 0x3f, 0x99, 0xaf } };
 			static const GUID id_del = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
@@ -29,6 +31,7 @@ namespace {
 			default: uBugCheck();
 			}
 		}
+
 		void get_name(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_pl_rem: p_out = "Remove from playlist"; break;
@@ -37,6 +40,7 @@ namespace {
 			default: uBugCheck();
 			}
 		}
+
 		bool get_description(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_pl_rem: p_out = "Removes the currently playing song from its playlist and advances playback."; return true;
@@ -45,9 +49,11 @@ namespace {
 			default: return false;
 			}
 		}
+
 		GUID get_parent() override {
 			return id_group;
 		}
+
 		void execute(t_uint32 p_index, service_ptr_t<service_base> p_callback) override {
 			switch (p_index) {
 			case cmd_pl_rem: exec_pl_rem(); break;
@@ -105,7 +111,7 @@ namespace {
 
 			int code = SHFileOperation(&fileOp);
 			if (code != 0) {
-				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code " , code));
+				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code ", code));
 			}
 		}
 
@@ -117,7 +123,7 @@ namespace {
 
 			auto name = song_name(&item->get_full_info_ref(fb2k::noAbort)->info());
 
-			ClipboardHelper::OpenScope scope; 
+			ClipboardHelper::OpenScope scope;
 			scope.Open(core_api::get_main_window());
 
 			ClipboardHelper::SetString(name.c_str());
