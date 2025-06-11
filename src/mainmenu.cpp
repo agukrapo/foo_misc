@@ -143,7 +143,7 @@ namespace {
 			metadb_handle_ptr item;
 			if (playback_control_v3::get()->get_now_playing(item)) {
 				auto info = &item->get_full_info_ref(fb2k::noAbort)->info();
-				query << "* HAS " << song_name(info);
+				query << song_name(info);
 			}
 
 			library_search_ui::get()->show(query);
