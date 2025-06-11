@@ -113,6 +113,8 @@ namespace {
 			if (code != 0) {
 				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code ", code));
 			}
+
+			// TODO recycle parent dir if empty
 		}
 
 		void exec_cp_name() {
