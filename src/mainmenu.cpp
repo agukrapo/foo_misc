@@ -12,6 +12,7 @@ namespace {
 			cmd_pl_rem = 0,
 			cmd_del_file,
 			cmd_cp_name,
+			cmd_search_song,
 			cmd_total
 		};
 
@@ -23,11 +24,13 @@ namespace {
 			static const GUID id_pl_rem = { 0x674c0096, 0xb9fb, 0x4f4d, { 0xa0, 0xf6, 0x93, 0x7b, 0x35, 0x3f, 0x99, 0xaf } };
 			static const GUID id_del = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
 			static const GUID id_cp_name = { 0x600677dc, 0xd2b8, 0x4444, { 0xa2, 0xb9, 0x71, 0xdf, 0xcd, 0x85, 0x30, 0x4e } };
+			static const GUID id_search_song = { 0x6539b68e, 0x947, 0x4290, { 0xae, 0x18, 0xc, 0x60, 0x65, 0xc8, 0x2b, 0x3e } };
 
 			switch (p_index) {
 			case cmd_pl_rem: return id_pl_rem;
 			case cmd_del_file: return id_del;
 			case cmd_cp_name: return id_cp_name;
+			case cmd_search_song: return id_search_song;
 			default: uBugCheck();
 			}
 		}
@@ -37,6 +40,7 @@ namespace {
 			case cmd_pl_rem: p_out = "Remove from playlist"; break;
 			case cmd_del_file: p_out = "Recycle file"; break;
 			case cmd_cp_name: p_out = "Copy song name"; break;
+			case cmd_search_song: p_out = "Search for similar songs"; break;
 			default: uBugCheck();
 			}
 		}
@@ -46,6 +50,7 @@ namespace {
 			case cmd_pl_rem: p_out = "Removes the currently playing song from its playlist and advances playback."; return true;
 			case cmd_del_file: p_out = "Moves the currently playing song to the trash bin and advances playback."; return true;
 			case cmd_cp_name: p_out = "Copies the currently playing song name to the clipboard."; return true;
+			case cmd_search_song: p_out = "Searches the library for similar songs."; return true;
 			default: return false;
 			}
 		}
@@ -59,6 +64,7 @@ namespace {
 			case cmd_pl_rem: exec_pl_rem(); break;
 			case cmd_del_file: exec_del_file(); break;
 			case cmd_cp_name:exec_cp_name(); break;
+			case cmd_search_song: exec_search_song(); break;
 			default:
 				uBugCheck();
 			}
@@ -129,6 +135,18 @@ namespace {
 			scope.Open(core_api::get_main_window());
 
 			ClipboardHelper::SetString(name.c_str());
+		}
+
+		void exec_search_song() {
+			pfc::string_formatter query;
+
+			metadb_handle_ptr item;
+			if (playback_control_v3::get()->get_now_playing(item)) {
+				auto info = &item->get_full_info_ref(fb2k::noAbort)->info();
+				query << "* HAS " << song_name(info);
+			}
+
+			library_search_ui::get()->show(query);
 		}
 	};
 
