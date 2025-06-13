@@ -100,7 +100,11 @@ namespace {
 
 			pc->next();
 
-			std::string str(item->get_path());
+			recycle(item->get_path());
+		}
+
+		void recycle(const char* path) {
+			std::string str(path);
 			if (str._Starts_with("file://")) {
 				str.erase(0, 7);
 			}
@@ -118,9 +122,20 @@ namespace {
 			int code = SHFileOperation(&fileOp);
 			if (code != 0) {
 				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code ", code));
+				return;
 			}
 
-			// TODO recycle parent dir if empty
+			// also recycle empty parent dir
+			auto fs = filesystem::get(path);
+
+			pfc::string8 parent;
+			if (!fs->get_parent_path(path, parent)) {
+				return;
+			}
+
+			if (filesystem::g_is_empty_directory(parent, fb2k::noAbort)) {
+				recycle(parent);
+			}
 		}
 
 		void exec_cp_name() {
