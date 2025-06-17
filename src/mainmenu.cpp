@@ -13,6 +13,7 @@ namespace {
 			cmd_del_file,
 			cmd_cp_name,
 			cmd_search_song,
+			cmd_remove_album_md,
 			cmd_total
 		};
 
@@ -25,12 +26,14 @@ namespace {
 			static const GUID id_del = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
 			static const GUID id_cp_name = { 0x600677dc, 0xd2b8, 0x4444, { 0xa2, 0xb9, 0x71, 0xdf, 0xcd, 0x85, 0x30, 0x4e } };
 			static const GUID id_search_song = { 0x6539b68e, 0x947, 0x4290, { 0xae, 0x18, 0xc, 0x60, 0x65, 0xc8, 0x2b, 0x3e } };
+			static const GUID id_remove_album_md = { 0xd7395987, 0xf8b2, 0x4ea2, { 0xb4, 0x17, 0xe9, 0x91, 0x6, 0xc2, 0x2a, 0x58 } };
 
 			switch (p_index) {
 			case cmd_pl_rem: return id_pl_rem;
 			case cmd_del_file: return id_del;
 			case cmd_cp_name: return id_cp_name;
 			case cmd_search_song: return id_search_song;
+			case cmd_remove_album_md: return id_remove_album_md;
 			default: uBugCheck();
 			}
 		}
@@ -41,6 +44,7 @@ namespace {
 			case cmd_del_file: p_out = "Recycle file"; break;
 			case cmd_cp_name: p_out = "Copy song name"; break;
 			case cmd_search_song: p_out = "Search for similar songs"; break;
+			case cmd_remove_album_md: p_out = "Remove album metadata"; break;
 			default: uBugCheck();
 			}
 		}
@@ -51,6 +55,7 @@ namespace {
 			case cmd_del_file: p_out = "Moves the currently playing song to the trash bin and advances playback."; return true;
 			case cmd_cp_name: p_out = "Copies the currently playing song name to the clipboard."; return true;
 			case cmd_search_song: p_out = "Searches the library for similar songs."; return true;
+			case cmd_remove_album_md: p_out = "Removes album metadata from the currently playing song."; return true;
 			default: return false;
 			}
 		}
@@ -65,6 +70,7 @@ namespace {
 			case cmd_del_file: exec_del_file(); break;
 			case cmd_cp_name:exec_cp_name(); break;
 			case cmd_search_song: exec_search_song(); break;
+			case cmd_remove_album_md: exec_remove_album_md(); break;
 			default:
 				uBugCheck();
 			}
@@ -163,7 +169,21 @@ namespace {
 
 			library_search_ui::get()->show(query);
 		}
+
+		void exec_remove_album_md() {
+			metadb_handle_ptr item;
+			if (!playback_control_v3::get()->get_now_playing(item)) {
+				return;
+			}
+
+			auto info = &item->get_full_info_ref(fb2k::noAbort)->info();
+
+			file_info_impl mut(*info);
+			mut.meta_remove_field("album");
+
+			metadb_io::get()->update_info(item, mut, core_api::get_main_window(), true);
+		}
 	};
 
-	static mainmenu_commands_factory_t<_commands> g_mainmenu_commands_sample_factory;
+	static mainmenu_commands_factory_t<_commands> g_mainmenu_commands_factory;
 }
