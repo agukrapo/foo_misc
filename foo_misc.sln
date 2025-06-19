@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foo_misc", "src\foo_misc.vcxproj", "{85FBFD09-0099-4FE9-9DB6-78DB6F60F817}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foobar2000_component_client", "lib\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj", "{71AD2674-065B-48F5-B8B0-E1F9D3892081}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libPPUI", "lib\libPPUI\libPPUI.vcxproj", "{7729EB82-4069-4414-964B-AD399091A03F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foo_sample", "lib\foobar2000\foo_sample\foo_sample.vcxproj", "{E6212904-A618-40C8-91C2-198C73D67D89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x64.Build.0 = Release|x64
 		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x86.ActiveCfg = Release|Win32
 		{7729EB82-4069-4414-964B-AD399091A03F}.Release|x86.Build.0 = Release|Win32
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Debug|x64.ActiveCfg = Debug|x64
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Debug|x64.Build.0 = Debug|x64
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Debug|x86.ActiveCfg = Debug|Win32
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Debug|x86.Build.0 = Debug|Win32
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Release|x64.ActiveCfg = Release|x64
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Release|x64.Build.0 = Release|x64
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Release|x86.ActiveCfg = Release|Win32
+		{E6212904-A618-40C8-91C2-198C73D67D89}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
