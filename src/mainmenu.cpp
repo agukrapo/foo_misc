@@ -180,6 +180,10 @@ namespace {
 
 			file_info_impl mut(*info);
 			mut.meta_remove_field("album");
+			mut.meta_remove_field("tracknumber");
+			mut.meta_remove_field("totaltracks");
+			mut.meta_remove_field("discnumber");
+			mut.meta_remove_field("totaldiscs");
 
 			metadb_io::get()->update_info(item, mut, core_api::get_main_window(), true);
 		}
