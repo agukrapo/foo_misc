@@ -51,7 +51,7 @@ namespace {
 
 		bool get_description(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
-			case cmd_pl_rem: p_out = "Removes the currently playing song from its playlist and advances playback."; return true;
+			case cmd_pl_rem: p_out = "Removes the currently playing song from its playlist."; return true;
 			case cmd_del_file: p_out = "Moves the currently playing song to the trash bin and advances playback."; return true;
 			case cmd_cp_name: p_out = "Copies the currently playing song name to the clipboard."; return true;
 			case cmd_search_song: p_out = "Searches the library for similar songs."; return true;
@@ -82,7 +82,7 @@ namespace {
 			if (!pm->get_playing_item_location(&pl_idx, &item_idx)) {
 				return;
 			}
-			playback_control_v3::get()->next();
+
 			bit_array_one arr(item_idx);
 			pm->playlist_undo_backup(pl_idx);
 			pm->playlist_remove_items(pl_idx, arr);
