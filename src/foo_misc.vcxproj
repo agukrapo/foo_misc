@@ -344,9 +344,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="contextmenu.cpp" />
+    <ClCompile Include="context_copy.cpp" />
+    <ClCompile Include="context_search.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="now_playing.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

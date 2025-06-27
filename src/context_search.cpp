@@ -1,11 +1,12 @@
 #include "stdafx.h"
 
+
 namespace {
-	static const GUID id_group = { 0xc7bef687, 0x56c5, 0x43df, { 0xb7, 0xca, 0xd7, 0xbd, 0x4b, 0xa8, 0x31, 0x5a } };
+	static const GUID id_search_group = { 0xc7bef687, 0x56c5, 0x43df, { 0xb7, 0xca, 0xd7, 0xbd, 0x4b, 0xa8, 0x31, 0x5a } };
 
-	static contextmenu_group_popup_factory _group_factory(id_group, contextmenu_groups::root, "Search more of the same", 0);
+	static contextmenu_group_popup_factory search_group_factory(id_search_group, contextmenu_groups::root, "Search more of the same", 0);
 
-	class _items : public contextmenu_item_simple {
+	class search_items : public contextmenu_item_simple {
 	public:
 		enum {
 			cmd_song = 0,
@@ -17,8 +18,9 @@ namespace {
 			cmd_directory,
 			cmd_total
 		};
+
 		GUID get_parent() override {
-			return id_group;
+			return id_search_group;
 		}
 
 		unsigned get_num_items() override {
@@ -39,25 +41,24 @@ namespace {
 		}
 
 		GUID get_item_guid(unsigned p_index) override {
-			static const GUID id_song = { 0x609bd371, 0x80d9, 0x4557, { 0x91, 0xbe, 0x18, 0x2, 0x0, 0x53, 0xc9, 0xf0 } };
-			static const GUID id_artist = { 0x9248b12c, 0xb88, 0x4870, { 0xbe, 0x88, 0x99, 0x6e, 0x92, 0x32, 0x7d, 0x74 } };
-			static const GUID id_title = { 0x7036c22e, 0xbcf2, 0x4711, { 0xba, 0x7d, 0xce, 0x2b, 0xf4, 0xcd, 0x86, 0xdb } };
-			static const GUID id_album = { 0x400144ef, 0xc0a9, 0x43e5, { 0x96, 0x64, 0x97, 0x9b, 0xa1, 0x85, 0xad, 0xbc } };
-			static const GUID id_date = { 0x7f0da23d, 0xb26, 0x4f76, { 0xad, 0x89, 0x79, 0x10, 0xb4, 0x11, 0xdd, 0xea } };
-			static const GUID id_genre = { 0x320fa698, 0x21dc, 0x4fd4, { 0xab, 0x0, 0x32, 0xf5, 0xfc, 0x6b, 0x23, 0x69 } };
-			static const GUID id_directory = { 0x68a09497, 0x3e65, 0x429d, { 0x9c, 0x1b, 0x57, 0xd7, 0xc1, 0x3d, 0x6a, 0xbb } };
+			static const GUID id_cmd_song = { 0x609bd371, 0x80d9, 0x4557, { 0x91, 0xbe, 0x18, 0x2, 0x0, 0x53, 0xc9, 0xf0 } };
+			static const GUID id_cmd_artist = { 0x9248b12c, 0xb88, 0x4870, { 0xbe, 0x88, 0x99, 0x6e, 0x92, 0x32, 0x7d, 0x74 } };
+			static const GUID id_cmd_title = { 0x7036c22e, 0xbcf2, 0x4711, { 0xba, 0x7d, 0xce, 0x2b, 0xf4, 0xcd, 0x86, 0xdb } };
+			static const GUID id_cmd_album = { 0x400144ef, 0xc0a9, 0x43e5, { 0x96, 0x64, 0x97, 0x9b, 0xa1, 0x85, 0xad, 0xbc } };
+			static const GUID id_cmd_date = { 0x7f0da23d, 0xb26, 0x4f76, { 0xad, 0x89, 0x79, 0x10, 0xb4, 0x11, 0xdd, 0xea } };
+			static const GUID id_cmd_genre = { 0x320fa698, 0x21dc, 0x4fd4, { 0xab, 0x0, 0x32, 0xf5, 0xfc, 0x6b, 0x23, 0x69 } };
+			static const GUID id_cmd_directory = { 0x68a09497, 0x3e65, 0x429d, { 0x9c, 0x1b, 0x57, 0xd7, 0xc1, 0x3d, 0x6a, 0xbb } };
 
 			switch (p_index) {
-			case cmd_song: return id_song;
-			case cmd_artist: return id_artist;
-			case cmd_title: return id_title;
-			case cmd_album: return id_album;
-			case cmd_date: return id_date;
-			case cmd_genre: return id_genre;
-			case cmd_directory: return id_directory;
+			case cmd_song: return id_cmd_song;
+			case cmd_artist: return id_cmd_artist;
+			case cmd_title: return id_cmd_title;
+			case cmd_album: return id_cmd_album;
+			case cmd_date: return id_cmd_date;
+			case cmd_genre: return id_cmd_genre;
+			case cmd_directory: return id_cmd_directory;
 			default: uBugCheck();
 			}
-
 		}
 
 		bool get_item_description(unsigned p_index, pfc::string_base& p_out) override {
@@ -155,5 +156,5 @@ namespace {
 		}
 	};
 
-	static contextmenu_item_factory_t<_items> _contextmenu_factory;
+	static contextmenu_item_factory_t<search_items> search_items_factory;
 }
