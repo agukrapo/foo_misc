@@ -344,7 +344,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="context_copy.cpp" />
+    <ClCompile Include="context_clear_md.cpp" />
+    <ClCompile Include="context_copy_md.cpp" />
     <ClCompile Include="context_search.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="now_playing.cpp" />

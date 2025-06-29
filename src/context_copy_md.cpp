@@ -2,11 +2,11 @@
 
 
 namespace {
-	static const GUID id_copy_group = { 0xa4180e66, 0x8a01, 0x41ea, { 0x81, 0xb7, 0xb3, 0x10, 0x43, 0xcc, 0x9d, 0x24 } };
+	static const GUID id_copy_md_group = { 0xa4180e66, 0x8a01, 0x41ea, { 0x81, 0xb7, 0xb3, 0x10, 0x43, 0xcc, 0x9d, 0x24 } };
 
-	static contextmenu_group_popup_factory copy_group_factory(id_copy_group, contextmenu_groups::root, "Copy metadata", 1);
+	static contextmenu_group_popup_factory copy_md_group_factory(id_copy_md_group, contextmenu_groups::root, "Copy metadata", 1);
 
-	class copy_items : public contextmenu_item_simple {
+	class copy_md_items : public contextmenu_item_simple {
 	public:
 		enum {
 			cmd_song = 0,
@@ -18,7 +18,7 @@ namespace {
 		};
 
 		GUID get_parent() override {
-			return id_copy_group;
+			return id_copy_md_group;
 		}
 
 		unsigned get_num_items() override {
@@ -101,5 +101,5 @@ namespace {
 		};
 	};
 
-	static contextmenu_item_factory_t<copy_items> copy_items_factory;
+	static contextmenu_item_factory_t<copy_md_items> copy_md_items_factory;
 }
