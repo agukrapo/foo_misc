@@ -4,7 +4,7 @@
 namespace {
 	static const GUID id_search_group = { 0xc7bef687, 0x56c5, 0x43df, { 0xb7, 0xca, 0xd7, 0xbd, 0x4b, 0xa8, 0x31, 0x5a } };
 
-	static contextmenu_group_popup_factory search_group_factory(id_search_group, contextmenu_groups::root, "Search more of the same", 0);
+	static contextmenu_group_popup_factory search_group_factory(id_search_group, id_context_menu_group, "Search more of the same", 0);
 
 	class search_items : public contextmenu_item_simple {
 	public:

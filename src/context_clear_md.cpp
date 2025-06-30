@@ -4,7 +4,7 @@
 namespace {
 	static const GUID id_clear_md_group = { 0xb38a7fe, 0x135a, 0x4d6b, { 0xb4, 0x40, 0xf7, 0xd6, 0x82, 0x3d, 0x7b, 0x1c } };
 
-	static contextmenu_group_popup_factory clear_md_group_factory(id_clear_md_group, contextmenu_groups::root, "Clear metadata", 1);
+	static contextmenu_group_popup_factory clear_md_group_factory(id_clear_md_group, id_context_menu_group, "Clear metadata", 1);
 
 	class clear_all_filter : public file_info_filter {
 	public:

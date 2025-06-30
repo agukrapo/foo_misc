@@ -4,7 +4,7 @@
 namespace {
 	static const GUID id_copy_md_group = { 0xa4180e66, 0x8a01, 0x41ea, { 0x81, 0xb7, 0xb3, 0x10, 0x43, 0xcc, 0x9d, 0x24 } };
 
-	static contextmenu_group_popup_factory copy_md_group_factory(id_copy_md_group, contextmenu_groups::root, "Copy metadata", 1);
+	static contextmenu_group_popup_factory copy_md_group_factory(id_copy_md_group, id_context_menu_group, "Copy metadata", 1);
 
 	class copy_md_items : public contextmenu_item_simple {
 	public:

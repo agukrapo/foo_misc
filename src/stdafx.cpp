@@ -1,6 +1,8 @@
 #include "stdafx.h"
 
 
+static contextmenu_group_factory group_factory(id_context_menu_group, contextmenu_groups::root, 0);
+
 pfc::string song_name(const file_info* info) {
 	auto artist = get_all_meta(info, "artist");
 	auto title = get_all_meta(info, "title");

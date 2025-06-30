@@ -1,6 +1,9 @@
 #include <helpers/foobar2000+atl.h>
 #include <libPPUI/clipboard.h>
 
+
+static const GUID id_context_menu_group = { 0xecfaa596, 0x6882, 0x4285, { 0x9c, 0x75, 0x5c, 0xb8, 0x82, 0xb0, 0x8a, 0x84 } };
+
 pfc::string song_name(const file_info* info);
 
 pfc::string get_all_meta(const file_info* info, const char* name);
