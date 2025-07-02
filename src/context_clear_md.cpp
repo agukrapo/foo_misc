@@ -40,7 +40,7 @@ namespace {
 		void get_item_name(unsigned p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_album: p_out = "Album"; break;
-			case cmd_all: p_out = "All but song metadata"; break;
+			case cmd_all: p_out = "All but song"; break;
 			default: uBugCheck();
 			}
 		}
