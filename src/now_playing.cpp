@@ -150,12 +150,7 @@ namespace {
 				return;
 			}
 
-			auto name = song_name(&item->get_full_info_ref(fb2k::noAbort)->info());
-
-			ClipboardHelper::OpenScope scope;
-			scope.Open(core_api::get_main_window());
-
-			ClipboardHelper::SetString(name.c_str());
+			set_clipboard(song_name(&item->get_full_info_ref(fb2k::noAbort)->info()));
 		}
 
 		void exec_search_song() {

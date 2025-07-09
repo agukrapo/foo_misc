@@ -94,10 +94,7 @@ namespace {
 				data << *iter;
 			}
 
-			ClipboardHelper::OpenScope scope;
-			scope.Open(core_api::get_main_window());
-
-			ClipboardHelper::SetString(data.c_str());
+			set_clipboard(data);
 		};
 	};
 

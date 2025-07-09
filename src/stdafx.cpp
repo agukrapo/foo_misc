@@ -3,6 +3,22 @@
 
 static contextmenu_group_factory group_factory(id_context_menu_group, contextmenu_groups::root, 0);
 
+void set_clipboard(pfc::string text) {
+	if (text.is_empty()) {
+		return;
+	}
+
+	const size_t len = strlen(text) + 1;
+	HGLOBAL mem = GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(mem), text, len);
+	GlobalUnlock(mem);
+	OpenClipboard(0);
+	EmptyClipboard();
+	SetClipboardData(CF_TEXT, mem);
+	CloseClipboard();
+}
+
+
 pfc::string song_name(const file_info* info) {
 	auto artist = get_all_meta(info, "artist");
 	auto title = get_all_meta(info, "title");
