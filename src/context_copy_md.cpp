@@ -12,6 +12,7 @@ namespace {
 			cmd_song = 0,
 			cmd_artist_album,
 			cmd_album,
+			cmd_title,
 			cmd_directory,
 			cmd_path,
 			cmd_total
@@ -30,6 +31,7 @@ namespace {
 			case cmd_song: p_out = "Song"; break;
 			case cmd_artist_album: p_out = "Artist Album"; break;
 			case cmd_album: p_out = "Album"; break;
+			case cmd_title: p_out = "Title"; break;
 			case cmd_directory: p_out = "Directory"; break;
 			case cmd_path: p_out = "Path"; break;
 			default: uBugCheck();
@@ -40,6 +42,7 @@ namespace {
 			static const GUID id_cmd_song = { 0x3bc114ac, 0x207d, 0x4a3c, { 0xa1, 0x6e, 0xfe, 0xe0, 0x62, 0x39, 0xb1, 0x6a } };
 			static const GUID id_cmd_artist_album = { 0x6798346d, 0xdf7f, 0x4d4a, { 0x8b, 0x20, 0xea, 0xd3, 0x69, 0xb2, 0xb2, 0xe3 } };
 			static const GUID id_cmd_album = { 0x2e21e5fd, 0xf5d1, 0x40c4, { 0x81, 0x70, 0xe2, 0x80, 0x4f, 0xf9, 0x18, 0xdd } };
+			static const GUID id_cmd_title = { 0x3475a715, 0x7cb3, 0x46ee, { 0xb3, 0x67, 0xef, 0x12, 0xd5, 0x99, 0x17, 0x26 } };
 			static const GUID id_cmd_directory = { 0x7484b70f, 0x90c1, 0x453c, { 0x80, 0x77, 0xbf, 0x9a, 0xb0, 0x51, 0x4f, 0xba } };
 			static const GUID id_cmd_path = { 0x44d6a8c6, 0x313e, 0x45a9, { 0x8e, 0x98, 0xc6, 0x9c, 0x15, 0x5d, 0x31, 0x17 } };
 
@@ -47,6 +50,7 @@ namespace {
 			case cmd_song: return id_cmd_song;
 			case cmd_artist_album: return id_cmd_artist_album;
 			case cmd_album: return id_cmd_album;
+			case cmd_title: return id_cmd_title;
 			case cmd_directory: return id_cmd_directory;
 			case cmd_path: return id_cmd_path;
 			default: uBugCheck();
@@ -58,6 +62,7 @@ namespace {
 			case cmd_song: p_out = "Copies the song name."; return true;
 			case cmd_artist_album: p_out = "Copies artist & album names."; return true;
 			case cmd_album: p_out = "Copies the album name."; return true;
+			case cmd_title: p_out = "Copies the title."; return true;
 			case cmd_directory: p_out = "Copies the directory."; return true;
 			case cmd_path: p_out = "Copies the file path."; return true;
 			default:
@@ -70,6 +75,7 @@ namespace {
 			case cmd_song: metaCopy(p_data, "[[%artist%] [%title%]]"); break;
 			case cmd_artist_album: metaCopy(p_data, "[[%artist%] [%album%]]"); break;
 			case cmd_album: metaCopy(p_data, "[%album%]"); break;
+			case cmd_title: metaCopy(p_data, "[%title%]"); break;
 			case cmd_directory: metaCopy(p_data, "%directory%"); break;
 			case cmd_path: metaCopy(p_data, "%path%"); break;
 			default:
