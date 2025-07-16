@@ -3,18 +3,29 @@
 
 static contextmenu_group_factory group_factory(id_context_menu_group, contextmenu_groups::root, 0);
 
-void set_clipboard(pfc::string text) {
-	if (text.is_empty()) {
+void set_clipboard(pfc::string in) {
+	if (in.is_empty()) {
 		return;
 	}
 
-	const size_t len = strlen(text) + 1;
-	HGLOBAL mem = GlobalAlloc(GMEM_MOVEABLE, len);
-	memcpy(GlobalLock(mem), text, len);
-	GlobalUnlock(mem);
+	pfc::stringcvt::string_os_from_utf8 tmp(in);
+	const size_t size = (tmp.length() + 1) * sizeof(TCHAR);
+
+	HGLOBAL buffer = GlobalAlloc(GMEM_DDESHARE, size);
+	if (buffer == NULL) throw std::bad_alloc();
+
+	try {
+		CGlobalLockScope lock(buffer);
+		PFC_ASSERT(lock.GetSize() == size);
+		memcpy(lock.GetPtr(), tmp, size);
+	}
+	catch (...) {
+		GlobalFree(buffer); throw;
+	}
+
 	OpenClipboard(0);
 	EmptyClipboard();
-	SetClipboardData(CF_TEXT, mem);
+	SetClipboardData(CF_UNICODETEXT, buffer);
 	CloseClipboard();
 }
 
