@@ -92,9 +92,8 @@ namespace {
 			auto pm = playlist_manager_v6::get();
 
 			t_size pl_idx, item_idx;
-			if (pm->get_playing_item_location(&pl_idx, &item_idx)) {
-				bit_array_one arr(item_idx);
-				pm->playlist_remove_items(pl_idx, arr);
+			if (!pm->get_playing_item_location(&pl_idx, &item_idx)) {
+				return;
 			}
 
 			auto pc = playback_control_v3::get();
@@ -104,12 +103,17 @@ namespace {
 				return;
 			}
 
-			pc->next();
+			pc->stop();
 
-			recycle(item->get_path());
+			if (recycle(item->get_path())) {
+				pc->next();
+
+				bit_array_one arr(item_idx);
+				pm->playlist_remove_items(pl_idx, arr);
+			}
 		}
 
-		void recycle(const char* path) {
+		bool recycle(const char* path) {
 			std::string str(path);
 			if (str._Starts_with("file://")) {
 				str.erase(0, 7);
@@ -128,20 +132,18 @@ namespace {
 			int code = SHFileOperation(&fileOp);
 			if (code != 0) {
 				popup_message::g_complain(pfc::format("Could not recycle ", wstr.c_str(), "\nerror code ", code));
-				return;
+				return false;
 			}
 
 			// also recycle empty parent dir
 			auto fs = filesystem::get(path);
 
 			pfc::string8 parent;
-			if (!fs->get_parent_path(path, parent)) {
-				return;
+			if (fs->get_parent_path(path, parent) && filesystem::g_is_empty_directory(parent, fb2k::noAbort)) {
+				return recycle(parent);
 			}
 
-			if (filesystem::g_is_empty_directory(parent, fb2k::noAbort)) {
-				recycle(parent);
-			}
+			return true;
 		}
 
 		void exec_cp_name() {
