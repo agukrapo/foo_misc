@@ -89,12 +89,16 @@ namespace {
 		}
 
 		void exec_del_file() {
-			auto pc = playback_control_v3::get();
+			auto pc = playback_control::get();
+			auto pm = playlist_manager::get();
 
 			metadb_handle_ptr item;
 			if (!pc->get_now_playing(item)) {
 				return;
 			}
+
+			t_size pl_idx, item_idx;
+			bool found = pm->get_playing_item_location(&pl_idx, &item_idx);
 
 			pc->stop();
 
@@ -104,10 +108,7 @@ namespace {
 
 			pc->next();
 
-			auto pm = playlist_manager_v6::get();
-
-			t_size pl_idx, item_idx;
-			if (pm->get_playing_item_location(&pl_idx, &item_idx)) {
+			if (found) {
 				bit_array_one arr(item_idx);
 				pm->playlist_remove_items(pl_idx, arr);
 			}
