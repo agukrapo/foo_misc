@@ -10,7 +10,7 @@ namespace {
 	public:
 		enum {
 			cmd_pl_rem = 0,
-			cmd_del_file,
+			cmd_recycle,
 			cmd_cp_name,
 			cmd_search_song,
 			cmd_remove_album_md,
@@ -23,14 +23,14 @@ namespace {
 
 		GUID get_command(t_uint32 p_index) override {
 			static const GUID id_pl_rem = { 0x674c0096, 0xb9fb, 0x4f4d, { 0xa0, 0xf6, 0x93, 0x7b, 0x35, 0x3f, 0x99, 0xaf } };
-			static const GUID id_del = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
+			static const GUID id_recycle = { 0x94eb3400, 0x0f40, 0x4c18, { 0xa8, 0x1b, 0x2b, 0xf2, 0x7d, 0xd0, 0xca, 0xa9 } };
 			static const GUID id_cp_name = { 0x600677dc, 0xd2b8, 0x4444, { 0xa2, 0xb9, 0x71, 0xdf, 0xcd, 0x85, 0x30, 0x4e } };
 			static const GUID id_search_song = { 0x6539b68e, 0x947, 0x4290, { 0xae, 0x18, 0xc, 0x60, 0x65, 0xc8, 0x2b, 0x3e } };
 			static const GUID id_remove_album_md = { 0xd7395987, 0xf8b2, 0x4ea2, { 0xb4, 0x17, 0xe9, 0x91, 0x6, 0xc2, 0x2a, 0x58 } };
 
 			switch (p_index) {
 			case cmd_pl_rem: return id_pl_rem;
-			case cmd_del_file: return id_del;
+			case cmd_recycle: return id_recycle;
 			case cmd_cp_name: return id_cp_name;
 			case cmd_search_song: return id_search_song;
 			case cmd_remove_album_md: return id_remove_album_md;
@@ -41,7 +41,7 @@ namespace {
 		void get_name(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_pl_rem: p_out = "Remove from playlist"; break;
-			case cmd_del_file: p_out = "Recycle file"; break;
+			case cmd_recycle: p_out = "Recycle file"; break;
 			case cmd_cp_name: p_out = "Copy song name"; break;
 			case cmd_search_song: p_out = "Search for similar songs"; break;
 			case cmd_remove_album_md: p_out = "Remove album metadata"; break;
@@ -52,7 +52,7 @@ namespace {
 		bool get_description(t_uint32 p_index, pfc::string_base& p_out) override {
 			switch (p_index) {
 			case cmd_pl_rem: p_out = "Removes the currently playing song from its playlist."; return true;
-			case cmd_del_file: p_out = "Moves the currently playing song to the trash bin and advances playback."; return true;
+			case cmd_recycle: p_out = "Moves the currently playing song to the trash bin and advances playback."; return true;
 			case cmd_cp_name: p_out = "Copies the currently playing song name to the clipboard."; return true;
 			case cmd_search_song: p_out = "Searches the library for similar songs."; return true;
 			case cmd_remove_album_md: p_out = "Removes album metadata from the currently playing song."; return true;
@@ -67,7 +67,7 @@ namespace {
 		void execute(t_uint32 p_index, service_ptr_t<service_base> p_callback) override {
 			switch (p_index) {
 			case cmd_pl_rem: exec_pl_rem(); break;
-			case cmd_del_file: exec_del_file(); break;
+			case cmd_recycle: exec_recycle(); break;
 			case cmd_cp_name:exec_cp_name(); break;
 			case cmd_search_song: exec_search_song(); break;
 			case cmd_remove_album_md: exec_remove_album_md(); break;
@@ -88,7 +88,7 @@ namespace {
 			pm->playlist_remove_items(pl_idx, arr);
 		}
 
-		void exec_del_file() {
+		void exec_recycle() {
 			auto pc = playback_control::get();
 			auto pm = playlist_manager::get();
 
