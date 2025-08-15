@@ -104,7 +104,7 @@ namespace {
 					query.add_string(" OR ");
 				}
 
-				query << "* HAS " << song;
+				query << "* HAS " << song.lowerCase();
 			}
 
 			library_search_ui::get()->show(query);
@@ -125,7 +125,7 @@ namespace {
 					query.add_string(" OR ");
 				}
 
-				query << "%" << name << "% HAS " << data;
+				query << "%" << name << "% HAS " << data.lowerCase();
 			}
 
 			library_search_ui::get()->show(query);
