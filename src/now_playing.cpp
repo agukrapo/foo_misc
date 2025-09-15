@@ -119,6 +119,9 @@ namespace {
 			if (str._Starts_with("file://")) {
 				str.erase(0, 7);
 			}
+			else if (str._Starts_with("file-relative://")) {
+				str.erase(0, 16);
+			}
 
 			CA2W ca2w(str.c_str());
 			std::wstring wstr = ca2w;
