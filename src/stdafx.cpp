@@ -62,8 +62,10 @@ void clear_metadata(metadb_handle_list_cref p_data, service_ptr_t<file_info_filt
 bool clear_album_filter::apply_filter(metadb_handle_ptr p_location, t_filestats p_stats, file_info& p_info) {
 	p_info.meta_remove_field("album");
 	p_info.meta_remove_field("album artist");
+	p_info.meta_remove_field("track");
 	p_info.meta_remove_field("tracknumber");
 	p_info.meta_remove_field("totaltracks");
+	p_info.meta_remove_field("disc");
 	p_info.meta_remove_field("discnumber");
 	p_info.meta_remove_field("totaldiscs");
 	return true;
