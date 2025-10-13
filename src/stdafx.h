@@ -10,6 +10,8 @@ pfc::string song_name(const file_info* info);
 
 pfc::string get_all_meta(const file_info* info, const char* name);
 
+pfc::avltree_t<pfc::string> extract_title_format(metadb_handle_list_cref p_data, const char* script);
+
 void clear_metadata(metadb_handle_list_cref p_data, service_ptr_t<file_info_filter> p_filter);
 
 class clear_album_filter : public file_info_filter {

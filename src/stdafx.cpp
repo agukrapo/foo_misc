@@ -55,6 +55,19 @@ pfc::string get_all_meta(const file_info* info, const char* name) {
 	return out;
 }
 
+pfc::avltree_t<pfc::string> extract_title_format(metadb_handle_list_cref p_data, const char* script) {
+	pfc::avltree_t<pfc::string> out;
+
+	for (t_size i = 0; i < p_data.get_count(); ++i) {
+		auto fmt = fb2k::formatTrackTitle(p_data[i], script);
+		if (!fmt.is_empty()) {
+			out += fmt;
+		}
+	}
+
+	return out;
+}
+
 void clear_metadata(metadb_handle_list_cref p_data, service_ptr_t<file_info_filter> p_filter) {
 	metadb_io_v2::get()->update_info_async(p_data, p_filter, core_api::get_main_window(), metadb_io_v2::op_flag_silent, NULL);
 };
