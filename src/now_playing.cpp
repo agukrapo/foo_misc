@@ -102,7 +102,7 @@ namespace {
 
 			pc->stop();
 
-			if (!recycle(item->get_path())) {
+			if (!recycle(fb2k::formatTrackTitle(item, "%path%"))) {
 				return;
 			}
 
@@ -116,12 +116,6 @@ namespace {
 
 		bool recycle(const char* path) {
 			std::string str(path);
-			if (str._Starts_with("file://")) {
-				str.erase(0, 7);
-			}
-			else if (str._Starts_with("file-relative://")) {
-				str.erase(0, 16);
-			}
 
 			CA2W ca2w(str.c_str());
 			std::wstring wstr = ca2w;
