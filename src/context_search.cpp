@@ -90,45 +90,41 @@ namespace {
 		}
 
 		void songSearch(metadb_handle_list_cref p_data) {
+			auto dedups = extract_title_format(p_data, "[%artist% ][%title%]");
+
 			pfc::string_formatter query;
-
-			for (t_size i = 0; i < p_data.get_count(); ++i) {
-				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
-
-				auto song = song_name(info);
-				if (song.empty()) {
-					continue;
-				}
-
+			for (auto i = dedups.first(); i.is_valid(); ++i) {
 				if (!query.empty()) {
 					query.add_string(" OR ");
 				}
 
-				query << "* HAS " << song.lowerCase();
+				query << "* HAS " << clean_up(*i.get());
 			}
 
 			library_search_ui::get()->show(query);
 		}
 
 		void metaSearch(metadb_handle_list_cref p_data, const char* name) {
+			pfc::string_formatter script; script << "%" << name << "%";
+
+			auto dedups = extract_title_format(p_data, script);
+
 			pfc::string_formatter query;
-
-			for (t_size i = 0; i < p_data.get_count(); ++i) {
-				const file_info* info = &p_data[i]->get_full_info_ref(fb2k::noAbort)->info();
-
-				auto data = get_all_meta(info, name);
-				if (data.empty()) {
-					continue;
-				}
-
+			for (auto i = dedups.first(); i.is_valid(); ++i) {
 				if (!query.empty()) {
 					query.add_string(" OR ");
 				}
 
-				query << "%" << name << "% HAS " << data.lowerCase();
+				query << "%" << name << "% HAS " << clean_up(*i.get());
 			}
 
 			library_search_ui::get()->show(query);
+		}
+
+		pfc::string clean_up(pfc::string in) {
+			in.replace_string("(", " ");
+			in.replace_string(")", " ");
+			return in.lowerCase();
 		}
 
 		void folderSearch(metadb_handle_list_cref p_data) {
