@@ -162,7 +162,7 @@ namespace {
 				query << fb2k::formatTrackTitle(item, "[\"%artist%\" ][\"%title%\"]");
 			}
 
-			library_search_ui::get()->show(query);
+			library_search_ui::get()->show(query.lowerCase());
 		}
 
 		void exec_remove_album_md() {
