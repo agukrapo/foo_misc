@@ -30,6 +30,11 @@ jobs:
           $hash = (Get-FileHash -Algorithm SHA256 "foo_misc.fb2k-component").hash.ToString().toLower()
           Write-Output "$hash *foo_misc.fb2k-component" > "foo_misc.fb2k-component.sha256"
 
+      - name: Tagger
+        uses: agukrapo/tagger@d6a62c3e36f5dca0249ba301e0e7cabe04f074b1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
