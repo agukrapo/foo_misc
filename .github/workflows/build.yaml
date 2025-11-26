@@ -4,12 +4,11 @@ on: [pull_request, push]
 
 jobs:
   build:
-    name: Build
     runs-on: windows-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup devcmd
         uses: ilammy/msvc-dev-cmd@v1
@@ -30,11 +29,6 @@ jobs:
           $hash = (Get-FileHash -Algorithm SHA256 "foo_misc.fb2k-component").hash.ToString().toLower()
           Write-Output "$hash *foo_misc.fb2k-component" > "foo_misc.fb2k-component.sha256"
 
-      - name: Tagger
-        uses: agukrapo/tagger@d6a62c3e36f5dca0249ba301e0e7cabe04f074b1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -42,3 +36,17 @@ jobs:
           path: |
             foo_misc.fb2k-component
             foo_misc.fb2k-component.sha256
+
+  versioning:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Tagger
+        uses: agukrapo/tagger@d6a62c3e36f5dca0249ba301e0e7cabe04f074b1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
