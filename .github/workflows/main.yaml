@@ -1,6 +1,12 @@
-name: build
+name: main
 
-on: [pull_request, push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -32,7 +38,7 @@ jobs:
         with:
           path: foo_misc.fb2k-component
 
-  versioning:
+  release:
     needs: build
     runs-on: ubuntu-latest
 
