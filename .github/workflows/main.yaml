@@ -16,14 +16,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup x86 devcmd
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x86
+      # - name: Setup x86 devcmd
+      #   uses: ilammy/msvc-dev-cmd@v1
+      #   with:
+      #     arch: x86
 
-      - name: Build x86
-        run: |
-          msbuild foo_misc.sln /maxcpucount /p:Configuration=release /p:Platform=x86 /target:build
+      # - name: Build x86
+      #   run: |
+      #     msbuild foo_misc.sln /maxcpucount /p:Configuration=release /p:Platform=x86 /target:build
 
       - name: Setup x64 devcmd
         uses: ilammy/msvc-dev-cmd@v1
