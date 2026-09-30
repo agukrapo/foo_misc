@@ -65,5 +65,6 @@ pfc::string clean_up(pfc::string in) {
 	in.replace_string("]", " ");
 	in.replace_string("`", " ");
 	in.replace_string("´", " ");
-	return in;
+	in.replace_string("’", " ");
+	return in.lowerCase();
 }
